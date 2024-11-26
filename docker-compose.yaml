@@ -1,0 +1,26 @@
+services:
+  rate-limiter:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: rate-limiter
+    depends_on:
+      - redis
+    networks:
+      - rate-limiter-network
+    ports:
+      - "8080:8080"
+    restart: always
+
+  redis:
+    container_name: "redis"
+    image: "redis:alpine"
+    networks:
+      - rate-limiter-network
+    ports:
+      - "6379:6379"
+
+networks:
+  rate-limiter-network:
+    driver: bridge
+    name: rate-limiter-network

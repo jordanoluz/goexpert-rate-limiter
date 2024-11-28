@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN go mod tidy
+RUN go mod tidy && go test ./... -v
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o rate-limiter ./cmd/api
 
 FROM scratch
